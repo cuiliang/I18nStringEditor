@@ -161,16 +161,16 @@ public class ResourceFileService
 
         foreach (var kvp in jsonObject)
         {
-            var childNode = new ResourceNode(kvp.Key);
-            parentNode.AddChild(childNode);
-
             if (kvp.Value is JsonObject)
             {
+                var childNode = new ResourceNode(kvp.Key);
+                parentNode.AddChild(childNode);
                 ParseJsonToNode(kvp.Value, childNode);
             }
             else if (kvp.Value is JsonValue jsonValue)
             {
-                childNode.Value = jsonValue.ToString();
+                var childNode = new ResourceNode(kvp.Key, jsonValue.ToString());
+                parentNode.AddChild(childNode);
             }
         }
     }
