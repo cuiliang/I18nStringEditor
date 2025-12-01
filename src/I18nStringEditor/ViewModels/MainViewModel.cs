@@ -128,11 +128,11 @@ public partial class MainViewModel : ObservableObject
         
         if (!string.IsNullOrEmpty(_settingsService.Settings.LastOpenedFilePath))
         {
-            WindowTitle = $"I18nStringEditor - {_settingsService.Settings.LastOpenedFilePath} [{themeIndicator} {themeText}]";
+            WindowTitle = $"{_settingsService.Settings.LastOpenedFilePath}";
         }
         else
         {
-            WindowTitle = $"字符串管理 [{themeIndicator} {themeText}]";
+            WindowTitle = $"字符串管理";
         }
     }
 

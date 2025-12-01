@@ -105,9 +105,30 @@
                                 <TextBlock VerticalAlignment="Center" Text="主题" />
                             </StackPanel>
                         </MenuItem.Header>
-                        <MenuItem Command="{Binding SetThemeLightCommand}" Header="☀️ 亮色" />
-                        <MenuItem Command="{Binding SetThemeDarkCommand}" Header="🌙 暗色" />
-                        <MenuItem Command="{Binding SetThemeSystemCommand}" Header="💻 跟随系统" />
+                        <MenuItem Command="{Binding SetThemeLightCommand}">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE706;" Foreground="#FFB900" Margin="0,0,5,0" />
+                                    <TextBlock Text="亮色" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Command="{Binding SetThemeDarkCommand}">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE708;" Foreground="#6B6B6B" Margin="0,0,5,0" />
+                                    <TextBlock Text="暗色" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Command="{Binding SetThemeSystemCommand}">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE770;" Foreground="#60CDFF" Margin="0,0,5,0" />
+                                    <TextBlock Text="跟随系统" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
                     </MenuItem>
                 </Menu>
                 <Separator />
@@ -127,6 +148,7 @@
                     x:Name="SearchBox"
                     Width="200"
                     VerticalAlignment="Center"
+                    CaretBrush="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                     ToolTip="搜索 (Ctrl+F)" />
             </ToolBar>
@@ -203,7 +225,10 @@
                     <Border
                         MinWidth="300"
                         MaxHeight="300"
-                        BorderThickness="1">
+                        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                        BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                        BorderThickness="1"
+                        CornerRadius="4">
                         <ListBox
                             MaxHeight="280"
                             ItemsSource="{Binding SearchResults}"
@@ -249,11 +274,12 @@
 
                     <Border
                         Grid.Row="0"
-                        Padding="10,5">
+                        Padding="5,5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="Bold" Text="字符串资源" />
-                            <TextBlock Opacity="0.6" Text=" - " />
-                            <TextBlock Opacity="0.6" Text="{Binding SelectedTreeNode.FullPath}" />
+                            <!-- <TextBlock FontWeight="Bold" Text="字符串资源" />
+                            <TextBlock Opacity="0.6" Text=" - " /> -->
+                            <TextBlock Opacity="0.6" FontWeight="Bold" Text="{Binding SelectedTreeNode.FullPath}" />
+                            <TextBlock Opacity="0.6" Text="." />
                         </StackPanel>
                     </Border>
 
