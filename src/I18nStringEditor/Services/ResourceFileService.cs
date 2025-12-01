@@ -92,6 +92,7 @@ public class ResourceFileService
         return Directory.GetFiles(directory, "*.json")
             .Where(f => !Path.GetFileName(f).Equals(currentFileName, StringComparison.OrdinalIgnoreCase))
             .Where(f => !f.EndsWith(".info", StringComparison.OrdinalIgnoreCase))
+            .Where(f => !Path.GetFileName(f).Equals("i18n-state.json", StringComparison.OrdinalIgnoreCase))
             .ToList();
     }
 

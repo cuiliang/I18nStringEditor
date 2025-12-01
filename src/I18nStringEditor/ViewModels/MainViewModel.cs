@@ -387,25 +387,56 @@ public partial class MainViewModel : ObservableObject
         if (node == null)
             return;
 
-        // 找到父节点并选中
-        var parentNode = node.Parent;
-        while (parentNode != null && parentNode.Parent != null && parentNode.Parent != _resourceService.RootNode)
-        {
-            parentNode.IsExpanded = true;
-            parentNode = parentNode.Parent;
-        }
+        // 先清除之前的选择状态
+        ClearSelectionRecursive(TreeNodes);
 
+        // 确定要在树中选中的节点（如果是叶子节点，选中其父节点）
+        ResourceNode? treeNodeToSelect;
         if (node.IsLeaf && node.Parent != null)
         {
-            SelectedTreeNode = node.Parent;
-            SelectedStringItem = node;
+            treeNodeToSelect = node.Parent;
         }
         else
         {
-            SelectedTreeNode = node;
+            treeNodeToSelect = node;
+        }
+
+        // 从目标节点向上展开所有祖先节点
+        var ancestorNode = treeNodeToSelect?.Parent;
+        while (ancestorNode != null && ancestorNode != _resourceService.RootNode)
+        {
+            ancestorNode.IsExpanded = true;
+            ancestorNode = ancestorNode.Parent;
+        }
+
+        // 设置选中状态
+        if (treeNodeToSelect != null)
+        {
+            treeNodeToSelect.IsSelected = true;
+            SelectedTreeNode = treeNodeToSelect;
+        }
+
+        if (node.IsLeaf)
+        {
+            SelectedStringItem = node;
         }
 
         SearchText = string.Empty;
+    }
+
+    /// <summary>
+    /// 递归清除所有节点的选择状态
+    /// </summary>
+    private void ClearSelectionRecursive(IEnumerable<ResourceNode> nodes)
+    {
+        foreach (var node in nodes)
+        {
+            node.IsSelected = false;
+            if (node.Children.Count > 0)
+            {
+                ClearSelectionRecursive(node.Children);
+            }
+        }
     }
 
     /// <summary>
