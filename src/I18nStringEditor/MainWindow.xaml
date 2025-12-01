@@ -25,6 +25,10 @@
         <KeyBinding Command="{Binding CopyStringKeyCommand}" Gesture="Ctrl+Shift+C" />
         <KeyBinding Command="{Binding DeleteSelectedStringCommand}" Gesture="Delete" />
         <KeyBinding Command="{Binding ToggleOtherLanguagesPanelCommand}" Gesture="F3" />
+        <KeyBinding
+            Key="F"
+            Modifiers="Ctrl"
+            Command="{x:Static local:MainWindow.FocusSearchBoxCommand}" />
     </Window.InputBindings>
 
     <Window.Resources>
@@ -96,12 +100,15 @@
                 <TextBlock
                     Margin="5,0"
                     VerticalAlignment="Center"
-                    Text="搜索:" />
+                    FontWeight="SemiBold"
+                    Text="🔍 搜索:" />
                 <TextBox
-                    x:Name="SearchBox"
-                    Width="200"
-                    VerticalAlignment="Center"
-                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                        x:Name="SearchBox"
+                        Width="200"
+                        Background="White"
+                        VerticalAlignment="Center"
+                        Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="搜索 (Ctrl+F)" />
             </ToolBar>
         </ToolBarTray>
 
@@ -247,6 +254,24 @@
                         RowHeaderWidth="0"
                         SelectedItem="{Binding SelectedStringItem}"
                         SelectionMode="Single">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="DataGridCell">
+                                            <Border
+                                                Padding="2,4"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="150"
@@ -286,7 +311,6 @@
                 <!--  下部：其他语言值  -->
                 <Grid
                     Grid.Row="2"
-                    Height="150"
                     Visibility="{Binding ShowOtherLanguagesPanel, Converter={StaticResource BoolToVis}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -314,6 +338,24 @@
                         IsReadOnly="True"
                         ItemsSource="{Binding OtherLanguageValues}"
                         RowHeaderWidth="0">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="DataGridCell">
+                                            <Border
+                                                Padding="2,4"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="150"
@@ -337,7 +379,7 @@
             <Separator />
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Foreground="Gray" Text="快捷键: Ctrl+N 添加字符串 | Ctrl+Shift+C 复制Key | F3 切换语言面板" />
+                    <TextBlock Foreground="Gray" Text="快捷键: Ctrl+F 搜索 | Ctrl+N 添加字符串 | Ctrl+Shift+C 复制Key | F3 切换语言面板" />
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>

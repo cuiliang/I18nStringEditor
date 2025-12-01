@@ -544,6 +544,7 @@ public class AddStringDialog : Window
         Height = 250;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         ResizeMode = ResizeMode.NoResize;
+        SizeToContent = SizeToContent.Height;
 
         var grid = new System.Windows.Controls.Grid();
         grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
@@ -586,7 +587,7 @@ public class AddStringDialog : Window
         };
         System.Windows.Controls.Grid.SetRow(buttonPanel, 6);
 
-        var okButton = new System.Windows.Controls.Button { Content = "确定", Width = 75, Margin = new Thickness(0, 0, 10, 0) };
+        var okButton = new System.Windows.Controls.Button { Content = "确定(_S)", Width = 75, Margin = new Thickness(0, 0, 10, 0) };
         okButton.Click += (s, e) =>
         {
             if (string.IsNullOrWhiteSpace(_keyTextBox.Text))
@@ -684,7 +685,7 @@ public class SettingsDialog : Window
         };
         System.Windows.Controls.Grid.SetRow(buttonPanel, 3);
 
-        var okButton = new System.Windows.Controls.Button { Content = "确定", Width = 75, Margin = new Thickness(0, 0, 10, 0) };
+        var okButton = new System.Windows.Controls.Button { Content = "确定(_S)", Width = 75, Margin = new Thickness(0, 0, 10, 0) };
         okButton.Click += (s, e) =>
         {
             StringKeyTemplate = _templateTextBox.Text;

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using I18nStringEditor.Models;
 using I18nStringEditor.ViewModels;
 
@@ -14,11 +15,25 @@ public partial class MainWindow : Window
 {
     private MainViewModel _viewModel;
 
+    /// <summary>
+    /// Ctrl+F 定位到搜索框的命令
+    /// </summary>
+    public static readonly RoutedCommand FocusSearchBoxCommand = new RoutedCommand();
+
     public MainWindow()
     {
         InitializeComponent();
         _viewModel = new MainViewModel();
         DataContext = _viewModel;
+
+        // 注册 Ctrl+F 命令
+        CommandBindings.Add(new CommandBinding(FocusSearchBoxCommand, FocusSearchBox_Executed));
+    }
+
+    private void FocusSearchBox_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+        SearchBox.Focus();
+        SearchBox.SelectAll();
     }
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
