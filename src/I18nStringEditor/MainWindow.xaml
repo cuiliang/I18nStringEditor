@@ -37,6 +37,7 @@
         <!--  反向布尔转换器  -->
         <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis" />
         <local:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
+        <local:CheckedToForegroundConverter x:Key="CheckedToForegroundConverter" />
 
         <!--  Segoe Fluent Icons 字体样式  -->
         <Style x:Key="FluentIcon" TargetType="TextBlock">
@@ -90,9 +91,46 @@
                 </Button>
                 <Separator />
                 <ToggleButton IsChecked="{Binding ShowOtherLanguagesPanel}" ToolTip="显示/隐藏其他语言面板 (F3)">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Padding" Value="5,3" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border
+                                            x:Name="border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#0078D4" />
+                                                <Setter TargetName="border" Property="BorderBrush" Value="#005A9E" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#E5F1FB" />
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsChecked" Value="True" />
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="border" Property="Background" Value="#106EBE" />
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE774;" Foreground="#0078D4" />
-                        <TextBlock VerticalAlignment="Center" Text="其他语言" />
+                        <TextBlock x:Name="icon" Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE774;" Foreground="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}, Converter={StaticResource CheckedToForegroundConverter}}" />
+                        <TextBlock VerticalAlignment="Center" Text="其他语言" Foreground="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}, Converter={StaticResource CheckedToForegroundConverter}}" />
                     </StackPanel>
                 </ToggleButton>
                 <Separator />
@@ -108,13 +146,31 @@
                     <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE721;" Foreground="#0078D4" Margin="0,0,5,0" />
                     <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="搜索:" />
                 </StackPanel>
-                <TextBox
+                <Border
+                    Background="White"
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    CornerRadius="3"
+                    Padding="2">
+                    <TextBox
                         x:Name="SearchBox"
                         Width="200"
-                        Background="White"
                         VerticalAlignment="Center"
+                        BorderThickness="0"
                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="搜索 (Ctrl+F)" />
+                        ToolTip="搜索 (Ctrl+F)">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Background" Value="White" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Background" Value="#FFF8E1" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </Border>
             </ToolBar>
         </ToolBarTray>
 

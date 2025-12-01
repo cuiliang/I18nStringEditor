@@ -17,7 +17,7 @@ public partial class MainViewModel : ObservableObject
     private System.Timers.Timer? _autoSaveTimer;
 
     [ObservableProperty]
-    private string _windowTitle = "I18nStringEditor";
+    private string _windowTitle = "字符串管理";
 
     [ObservableProperty]
     private string _searchText = string.Empty;
