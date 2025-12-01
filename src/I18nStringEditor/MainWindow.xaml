@@ -37,7 +37,6 @@
         <!--  反向布尔转换器  -->
         <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis" />
         <local:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
-        <local:CheckedToForegroundConverter x:Key="CheckedToForegroundConverter" />
 
         <!--  Segoe Fluent Icons 字体样式  -->
         <Style x:Key="FluentIcon" TargetType="TextBlock">
@@ -55,7 +54,7 @@
         </Grid.RowDefinitions>
 
         <!--  工具栏  -->
-        <ToolBarTray Grid.Row="0" Background="#F5F5F5">
+        <ToolBarTray Grid.Row="0">
             <ToolBar Band="0" BandIndex="0">
                 <Button Command="{Binding OpenFileCommand}" ToolTip="打开文件 (Ctrl+O)">
                     <StackPanel Orientation="Horizontal">
@@ -65,7 +64,7 @@
                 </Button>
                 <Button Command="{Binding SaveFileCommand}" ToolTip="保存文件 (Ctrl+S)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE74E;" Foreground="#0078D4" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE74E;" Foreground="#60CDFF" />
                         <TextBlock VerticalAlignment="Center" Text="保存" />
                     </StackPanel>
                 </Button>
@@ -78,99 +77,58 @@
                 </Button>
                 <Button Command="{Binding AddStringCommand}" ToolTip="添加字符串 (Ctrl+N)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE710;" Foreground="#107C10" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE710;" Foreground="#6CCB5F" />
                         <TextBlock VerticalAlignment="Center" Text="添加字符串" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <Button Command="{Binding CopyStringKeyCommand}" ToolTip="复制 StringKey (Ctrl+Shift+C)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE8C8;" Foreground="#5C2D91" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE8C8;" Foreground="#B4A0FF" />
                         <TextBlock VerticalAlignment="Center" Text="复制 Key" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <ToggleButton IsChecked="{Binding ShowOtherLanguagesPanel}" ToolTip="显示/隐藏其他语言面板 (F3)">
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="Padding" Value="5,3" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border
-                                            x:Name="border"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="3"
-                                            Padding="{TemplateBinding Padding}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter TargetName="border" Property="Background" Value="#0078D4" />
-                                                <Setter TargetName="border" Property="BorderBrush" Value="#005A9E" />
-                                            </Trigger>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="Background" Value="#E5F1FB" />
-                                            </Trigger>
-                                            <MultiTrigger>
-                                                <MultiTrigger.Conditions>
-                                                    <Condition Property="IsChecked" Value="True" />
-                                                    <Condition Property="IsMouseOver" Value="True" />
-                                                </MultiTrigger.Conditions>
-                                                <Setter TargetName="border" Property="Background" Value="#106EBE" />
-                                            </MultiTrigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="icon" Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE774;" Foreground="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}, Converter={StaticResource CheckedToForegroundConverter}}" />
-                        <TextBlock VerticalAlignment="Center" Text="其他语言" Foreground="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}, Converter={StaticResource CheckedToForegroundConverter}}" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE774;" Foreground="#60CDFF" />
+                        <TextBlock VerticalAlignment="Center" Text="其他语言" />
                     </StackPanel>
                 </ToggleButton>
                 <Separator />
+                <!--  主题切换下拉菜单  -->
+                <Menu Background="Transparent" VerticalAlignment="Center">
+                    <MenuItem ToolTip="切换主题模式">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE771;" Foreground="#FFB900" />
+                                <TextBlock VerticalAlignment="Center" Text="主题" />
+                            </StackPanel>
+                        </MenuItem.Header>
+                        <MenuItem Command="{Binding SetThemeLightCommand}" Header="☀️ 亮色" />
+                        <MenuItem Command="{Binding SetThemeDarkCommand}" Header="🌙 暗色" />
+                        <MenuItem Command="{Binding SetThemeSystemCommand}" Header="💻 跟随系统" />
+                    </MenuItem>
+                </Menu>
+                <Separator />
                 <Button Command="{Binding OpenSettingsCommand}" ToolTip="设置">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE713;" Foreground="#6B6B6B" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE713;" Foreground="#9E9E9E" />
                         <TextBlock VerticalAlignment="Center" Text="设置" />
                     </StackPanel>
                 </Button>
             </ToolBar>
             <ToolBar Band="0" BandIndex="1">
                 <StackPanel Orientation="Horizontal" Margin="5,0">
-                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE721;" Foreground="#0078D4" Margin="0,0,5,0" />
+                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE721;" Foreground="#60CDFF" Margin="0,0,5,0" />
                     <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="搜索:" />
                 </StackPanel>
-                <Border
-                    Background="White"
-                    BorderBrush="#CCCCCC"
-                    BorderThickness="1"
-                    CornerRadius="3"
-                    Padding="2">
-                    <TextBox
-                        x:Name="SearchBox"
-                        Width="200"
-                        VerticalAlignment="Center"
-                        BorderThickness="0"
-                        Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="搜索 (Ctrl+F)">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Background" Value="White" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsFocused" Value="True">
-                                        <Setter Property="Background" Value="#FFF8E1" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </Border>
+                <TextBox
+                    x:Name="SearchBox"
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="搜索 (Ctrl+F)" />
             </ToolBar>
         </ToolBarTray>
 
@@ -191,8 +149,7 @@
 
                 <Border
                     Grid.Row="0"
-                    Padding="10,5"
-                    Background="#E8E8E8">
+                    Padding="10,5">
                     <TextBlock FontWeight="Bold" Text="资源节点" />
                 </Border>
 
@@ -202,7 +159,7 @@
                     ItemsSource="{Binding TreeNodes}"
                     SelectedItemChanged="TreeView_SelectedItemChanged">
                     <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem">
+                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                             <Setter Property="Padding" Value="3" />
@@ -215,7 +172,7 @@
                                 <TextBlock VerticalAlignment="Center" Text="{Binding Key}" />
                             </StackPanel>
                             <HierarchicalDataTemplate.ItemContainerStyle>
-                                <Style TargetType="TreeViewItem">
+                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsLeaf}" Value="True">
@@ -246,8 +203,6 @@
                     <Border
                         MinWidth="300"
                         MaxHeight="300"
-                        Background="White"
-                        BorderBrush="Gray"
                         BorderThickness="1">
                         <ListBox
                             MaxHeight="280"
@@ -257,10 +212,10 @@
                                 <DataTemplate>
                                     <StackPanel Margin="5" Orientation="Horizontal">
                                         <TextBlock FontWeight="SemiBold" Text="{Binding FullPath}" />
-                                        <TextBlock Foreground="Gray" Text=" = " />
+                                        <TextBlock Text=" = " Opacity="0.6" />
                                         <TextBlock
                                             MaxWidth="200"
-                                            Foreground="Blue"
+                                            Foreground="#60CDFF"
                                             Text="{Binding Value}"
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
@@ -275,8 +230,7 @@
             <GridSplitter
                 Grid.Column="1"
                 Width="5"
-                HorizontalAlignment="Stretch"
-                Background="#CCCCCC" />
+                HorizontalAlignment="Stretch" />
 
             <!--  右侧：编辑面板  -->
             <Grid Grid.Column="2">
@@ -295,12 +249,11 @@
 
                     <Border
                         Grid.Row="0"
-                        Padding="10,5"
-                        Background="#E8E8E8">
+                        Padding="10,5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontWeight="Bold" Text="字符串资源" />
-                            <TextBlock Foreground="Gray" Text=" - " />
-                            <TextBlock Foreground="Gray" Text="{Binding SelectedTreeNode.FullPath}" />
+                            <TextBlock Opacity="0.6" Text=" - " />
+                            <TextBlock Opacity="0.6" Text="{Binding SelectedTreeNode.FullPath}" />
                         </StackPanel>
                     </Border>
 
@@ -367,7 +320,6 @@
                     Grid.Row="1"
                     Height="5"
                     HorizontalAlignment="Stretch"
-                    Background="#CCCCCC"
                     Visibility="{Binding ShowOtherLanguagesPanel, Converter={StaticResource BoolToVis}}" />
 
                 <!--  下部：其他语言值  -->
@@ -381,12 +333,11 @@
 
                     <Border
                         Grid.Row="0"
-                        Padding="10,5"
-                        Background="#E8E8E8">
+                        Padding="10,5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontWeight="Bold" Text="其他语言" />
-                            <TextBlock Foreground="Gray" Text=" - " />
-                            <TextBlock Foreground="Gray" Text="{Binding SelectedStringItem.FullPath}" />
+                            <TextBlock Opacity="0.6" Text=" - " />
+                            <TextBlock Opacity="0.6" Text="{Binding SelectedStringItem.FullPath}" />
                         </StackPanel>
                     </Border>
 
@@ -441,7 +392,7 @@
             <Separator />
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Foreground="Gray" Text="快捷键: Ctrl+F 搜索 | Ctrl+N 添加字符串 | Ctrl+Shift+C 复制Key | F3 切换语言面板" />
+                    <TextBlock Opacity="0.6" Text="快捷键: Ctrl+F 搜索 | Ctrl+N 添加字符串 | Ctrl+Shift+C 复制Key | F3 切换语言面板" />
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>

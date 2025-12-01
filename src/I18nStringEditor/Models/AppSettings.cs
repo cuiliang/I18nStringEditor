@@ -1,6 +1,27 @@
 namespace I18nStringEditor.Models;
 
 /// <summary>
+/// 主题模式枚举
+/// </summary>
+public enum ThemeMode
+{
+    /// <summary>
+    /// 亮色主题
+    /// </summary>
+    Light,
+
+    /// <summary>
+    /// 暗色主题
+    /// </summary>
+    Dark,
+
+    /// <summary>
+    /// 跟随系统
+    /// </summary>
+    System
+}
+
+/// <summary>
 /// 应用程序设置
 /// </summary>
 public class AppSettings
@@ -29,4 +50,9 @@ public class AppSettings
     /// 左侧面板宽度
     /// </summary>
     public double LeftPanelWidth { get; set; } = 300;
+
+    /// <summary>
+    /// 主题模式
+    /// </summary>
+    public ThemeMode ThemeMode { get; set; } = ThemeMode.System;
 }

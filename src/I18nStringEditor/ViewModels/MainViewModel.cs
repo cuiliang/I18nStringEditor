@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using I18nStringEditor.Models;
 using I18nStringEditor.Services;
 using Microsoft.Win32;
+using AppThemeMode = I18nStringEditor.Models.ThemeMode;
 
 namespace I18nStringEditor.ViewModels;
 
@@ -43,6 +44,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private bool _hasSearchResults;
 
+    [ObservableProperty]
+    private AppThemeMode _currentThemeMode = AppThemeMode.System;
+
     /// <summary>
     /// 树形节点集合（显示分组节点）
     /// </summary>
@@ -71,6 +75,14 @@ public partial class MainViewModel : ObservableObject
         // 加载设置
         _settingsService.Load();
         ShowOtherLanguagesPanel = _settingsService.Settings.ShowOtherLanguagesPanel;
+        CurrentThemeMode = _settingsService.Settings.ThemeMode;
+
+        // 应用主题
+        App.ApplyTheme(CurrentThemeMode);
+        App.ThemeChanged += OnThemeChanged;
+
+        // 更新窗口标题
+        UpdateWindowTitle();
 
         // 设置自动保存定时器
         _autoSaveTimer = new System.Timers.Timer(2000); // 2秒后自动保存
@@ -84,6 +96,11 @@ public partial class MainViewModel : ObservableObject
         };
     }
 
+    private void OnThemeChanged(object? sender, EventArgs e)
+    {
+        UpdateWindowTitle();
+    }
+
     public async Task InitializeAsync()
     {
         // 尝试加载上次打开的文件
@@ -93,6 +110,36 @@ public partial class MainViewModel : ObservableObject
             await LoadFileAsync(_settingsService.Settings.LastOpenedFilePath);
         }
     }
+
+    partial void OnCurrentThemeModeChanged(AppThemeMode value)
+    {
+        _settingsService.Settings.ThemeMode = value;
+        _settingsService.Save();
+        App.ApplyTheme(value);
+    }
+
+    /// <summary>
+    /// 更新窗口标题
+    /// </summary>
+    private void UpdateWindowTitle()
+    {
+        var themeText = App.GetThemeModeDisplayName(CurrentThemeMode);
+        var themeIndicator = App.IsDarkTheme ? "🌙" : "☀️";
+        
+        if (!string.IsNullOrEmpty(_settingsService.Settings.LastOpenedFilePath))
+        {
+            WindowTitle = $"I18nStringEditor - {_settingsService.Settings.LastOpenedFilePath} [{themeIndicator} {themeText}]";
+        }
+        else
+        {
+            WindowTitle = $"字符串管理 [{themeIndicator} {themeText}]";
+        }
+    }
+
+    /// <summary>
+    /// 获取主题模式显示名称
+    /// </summary>
+    public string GetThemeDisplayName(AppThemeMode mode) => App.GetThemeModeDisplayName(mode);
 
     partial void OnSelectedTreeNodeChanged(ResourceNode? value)
     {
@@ -199,10 +246,12 @@ public partial class MainViewModel : ObservableObject
                     }
                 }
 
-                // 更新标题和设置
-                WindowTitle = $"I18nStringEditor - {filePath}";
+                // 更新设置
                 _settingsService.Settings.LastOpenedFilePath = filePath;
                 _settingsService.Save();
+
+                // 更新标题（包含主题信息）
+                UpdateWindowTitle();
 
                 // 加载StringKey模板
                 if (_resourceService.CurrentInfo != null)
@@ -367,6 +416,24 @@ public partial class MainViewModel : ObservableObject
     private void ToggleOtherLanguagesPanel()
     {
         ShowOtherLanguagesPanel = !ShowOtherLanguagesPanel;
+    }
+
+    [RelayCommand]
+    private void SetThemeLight()
+    {
+        CurrentThemeMode = AppThemeMode.Light;
+    }
+
+    [RelayCommand]
+    private void SetThemeDark()
+    {
+        CurrentThemeMode = AppThemeMode.Dark;
+    }
+
+    [RelayCommand]
+    private void SetThemeSystem()
+    {
+        CurrentThemeMode = AppThemeMode.System;
     }
 
     [RelayCommand]

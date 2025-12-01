@@ -113,23 +113,3 @@ public class GreaterThanZeroConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
-
-/// <summary>
-/// 选中状态前景色转换器（ToggleButton 选中时文字变白色）
-/// </summary>
-public class CheckedToForegroundConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is bool isChecked && isChecked)
-        {
-            return System.Windows.Media.Brushes.White;
-        }
-        return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 120, 212)); // #0078D4
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
