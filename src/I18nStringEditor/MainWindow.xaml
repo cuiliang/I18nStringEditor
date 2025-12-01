@@ -37,6 +37,13 @@
         <!--  反向布尔转换器  -->
         <local:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis" />
         <local:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
+
+        <!--  Segoe Fluent Icons 字体样式  -->
+        <Style x:Key="FluentIcon" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -51,57 +58,56 @@
             <ToolBar Band="0" BandIndex="0">
                 <Button Command="{Binding OpenFileCommand}" ToolTip="打开文件 (Ctrl+O)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="📂" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE838;" Foreground="#D4A017" />
                         <TextBlock VerticalAlignment="Center" Text="打开" />
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding SaveFileCommand}" ToolTip="保存文件 (Ctrl+S)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="💾" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE74E;" Foreground="#0078D4" />
                         <TextBlock VerticalAlignment="Center" Text="保存" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <Button Command="{Binding AddGroupCommand}" ToolTip="添加分组 (Ctrl+Shift+N)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="📁" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE8F4;" Foreground="#D4A017" />
                         <TextBlock VerticalAlignment="Center" Text="添加分组" />
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding AddStringCommand}" ToolTip="添加字符串 (Ctrl+N)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="➕" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE710;" Foreground="#107C10" />
                         <TextBlock VerticalAlignment="Center" Text="添加字符串" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <Button Command="{Binding CopyStringKeyCommand}" ToolTip="复制 StringKey (Ctrl+Shift+C)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="📋" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE8C8;" Foreground="#5C2D91" />
                         <TextBlock VerticalAlignment="Center" Text="复制 Key" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <ToggleButton IsChecked="{Binding ShowOtherLanguagesPanel}" ToolTip="显示/隐藏其他语言面板 (F3)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="🌐" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE774;" Foreground="#0078D4" />
                         <TextBlock VerticalAlignment="Center" Text="其他语言" />
                     </StackPanel>
                 </ToggleButton>
                 <Separator />
                 <Button Command="{Binding OpenSettingsCommand}" ToolTip="设置">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Text="⚙️" />
+                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE713;" Foreground="#6B6B6B" />
                         <TextBlock VerticalAlignment="Center" Text="设置" />
                     </StackPanel>
                 </Button>
             </ToolBar>
             <ToolBar Band="0" BandIndex="1">
-                <TextBlock
-                    Margin="5,0"
-                    VerticalAlignment="Center"
-                    FontWeight="SemiBold"
-                    Text="🔍 搜索:" />
+                <StackPanel Orientation="Horizontal" Margin="5,0">
+                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE721;" Foreground="#0078D4" Margin="0,0,5,0" />
+                    <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="搜索:" />
+                </StackPanel>
                 <TextBox
                         x:Name="SearchBox"
                         Width="200"
@@ -149,7 +155,7 @@
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="14" Text="📁 " />
+                                <TextBlock FontFamily="Segoe Fluent Icons" FontSize="14" Text="&#xE8B7;" Foreground="#D4A017" Margin="0,0,5,0" VerticalAlignment="Center" />
                                 <TextBlock VerticalAlignment="Center" Text="{Binding Key}" />
                             </StackPanel>
                             <HierarchicalDataTemplate.ItemContainerStyle>
