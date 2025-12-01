@@ -1,0 +1,33 @@
+{
+  "Common": {
+    "Ok": "确定",
+    "Cancel": "取消",
+    "Error": "错误"
+  },
+  "MainWindow": {
+    "Title": "我的超级应用",
+    "Welcome": "欢迎使用 Quicker3",
+    "ToggleTheme": "切换主题",
+    "Menu": {
+      "File": "文件",
+      "Edit": "编辑",
+      "Test": "测试"
+    }
+  },
+  "Settings": {
+    "Theme": "主题",
+    "Language": "语言"
+  },
+  "Areas": {
+    "Accounts": {
+      "AccountSelectionWindow": {
+        "Title": "选择账户",
+        "Prompt": "请选择一个账户以继续："
+      },
+      "Common": {
+        "LocalAccountTitle": "本地账户",
+        "LocalAccountDesc": "离线模式，数据仅保存在本地。"
+      }
+    }
+  }
+}

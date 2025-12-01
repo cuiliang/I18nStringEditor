@@ -1,0 +1,33 @@
+{
+  "Common": {
+    "Ok": "OK",
+    "Cancel": "Cancel",
+    "Error": "Error"
+  },
+  "MainWindow": {
+    "Title": "My Super App",
+    "Welcome": "Welcome to Quicker3",
+    "ToggleTheme": "Toggle Theme",
+    "Menu": {
+      "File": "File",
+      "Edit": "Edit",
+      "Test": "Test"
+    }
+  },
+  "Settings": {
+    "Theme": "Theme",
+    "Language": "Language"
+  },
+  "Areas": {
+    "Accounts": {
+      "AccountSelectionWindow": {
+        "Title": "Select Account",
+        "Prompt": "Please select an account to continue:"
+      },
+      "Common": {
+        "LocalAccountTitle": "Local Account",
+        "LocalAccountDesc": "Offline mode, data is saved locally only."
+      }
+    }
+  }
+}
