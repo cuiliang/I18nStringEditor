@@ -18,6 +18,8 @@ public class ResourceFileService
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
+    private FileStream? _fileLock;
+
     /// <summary>
     /// 当前加载的文件路径
     /// </summary>
@@ -41,12 +43,34 @@ public class ResourceFileService
         if (!File.Exists(filePath))
             return null;
 
+        // 关闭当前文件
+        CloseCurrentFile();
+
+        try
+        {
+            // 尝试以读写权限打开文件，并允许其他进程读取（但不允许写入）
+            _fileLock = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+        }
+        catch (IOException)
+        {
+            throw new IOException($"文件 \"{filePath}\" 已在另一个程序中打开。");
+        }
+
         CurrentFilePath = filePath;
-        var json = await File.ReadAllTextAsync(filePath);
+        
+        string json;
+        using (var reader = new StreamReader(_fileLock, System.Text.Encoding.UTF8, detectEncodingFromByteOrderMarks: true, bufferSize: -1, leaveOpen: true))
+        {
+            json = await reader.ReadToEndAsync();
+        }
+
         var jsonNode = JsonNode.Parse(json);
 
         if (jsonNode == null)
+        {
+            CloseCurrentFile();
             return null;
+        }
 
         RootNode = new ResourceNode("Root");
         ParseJsonToNode(jsonNode, RootNode);
@@ -61,16 +85,38 @@ public class ResourceFileService
     }
 
     /// <summary>
+    /// 关闭当前文件
+    /// </summary>
+    public void CloseCurrentFile()
+    {
+        _fileLock?.Dispose();
+        _fileLock = null;
+        CurrentFilePath = null;
+        RootNode = null;
+        CurrentInfo = null;
+    }
+
+    /// <summary>
     /// 保存资源文件
     /// </summary>
     public async Task SaveAsync()
     {
-        if (string.IsNullOrEmpty(CurrentFilePath) || RootNode == null)
+        if (string.IsNullOrEmpty(CurrentFilePath) || RootNode == null || _fileLock == null)
             return;
 
         var jsonObject = NodeToJson(RootNode);
         var json = JsonSerializer.Serialize(jsonObject, JsonOptions);
-        await File.WriteAllTextAsync(CurrentFilePath, json);
+        
+        // 重置流位置并写入
+        _fileLock.SetLength(0);
+        _fileLock.Position = 0;
+
+        using (var writer = new StreamWriter(_fileLock, System.Text.Encoding.UTF8, bufferSize: -1, leaveOpen: true))
+        {
+            await writer.WriteAsync(json);
+            await writer.FlushAsync();
+        }
+        _fileLock.Flush(true);
 
         // 保存info文件
         await SaveInfoAsync();
@@ -108,7 +154,14 @@ public class ResourceFileService
         {
             try
             {
-                var json = await File.ReadAllTextAsync(file);
+                string json;
+                // 使用 FileShare.ReadWrite 打开，以便即使文件被其他进程锁定（只读共享）也能读取
+                using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var reader = new StreamReader(fs))
+                {
+                    json = await reader.ReadToEndAsync();
+                }
+
                 var jsonNode = JsonNode.Parse(json);
                 var value = GetValueByPath(jsonNode, fullPath);
 

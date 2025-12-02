@@ -577,4 +577,9 @@ public partial class MainViewModel : ObservableObject
         }
         _settingsService.Save();
     }
+
+    public void Close()
+    {
+        _resourceService.CloseCurrentFile();
+    }
 }
