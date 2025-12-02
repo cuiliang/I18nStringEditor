@@ -382,7 +382,11 @@ public partial class MainViewModel : ObservableObject
             newNode.Comment = dialog.StringComment;
             StringItems.Add(newNode);
             TriggerAutoSave();
-            StatusMessage = "已添加新字符串";
+
+            // 自动复制生成的 Key 到剪贴板
+            var stringKey = StringKeyTemplate.Replace("{KEY}", newNode.StringKey);
+            Clipboard.SetText(stringKey);
+            StatusMessage = $"已添加新字符串，Key已复制: {stringKey}";
         }
     }
 
