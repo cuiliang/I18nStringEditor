@@ -27,8 +27,8 @@
         <KeyBinding Command="{Binding ToggleOtherLanguagesPanelCommand}" Gesture="F3" />
         <KeyBinding
             Key="F"
-            Modifiers="Ctrl"
-            Command="{x:Static local:MainWindow.FocusSearchBoxCommand}" />
+            Command="{x:Static local:MainWindow.FocusSearchBoxCommand}"
+            Modifiers="Ctrl" />
     </Window.InputBindings>
 
     <Window.Resources>
@@ -58,74 +58,114 @@
             <ToolBar Band="0" BandIndex="0">
                 <Button Command="{Binding OpenFileCommand}" ToolTip="打开文件 (Ctrl+O)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE838;" Foreground="#D4A017" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#D4A017"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE838;" />
                         <TextBlock VerticalAlignment="Center" Text="打开" />
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding SaveFileCommand}" ToolTip="保存文件 (Ctrl+S)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE74E;" Foreground="#60CDFF" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#60CDFF"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE74E;" />
                         <TextBlock VerticalAlignment="Center" Text="保存" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <Button Command="{Binding AddGroupCommand}" ToolTip="添加分组 (Ctrl+Shift+N)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE8F4;" Foreground="#D4A017" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#D4A017"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE8F4;" />
                         <TextBlock VerticalAlignment="Center" Text="添加分组" />
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding AddStringCommand}" ToolTip="添加字符串 (Ctrl+N)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE710;" Foreground="#6CCB5F" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#6CCB5F"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE710;" />
                         <TextBlock VerticalAlignment="Center" Text="添加字符串" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <Button Command="{Binding CopyStringKeyCommand}" ToolTip="复制 StringKey (Ctrl+Shift+C)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE8C8;" Foreground="#B4A0FF" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#B4A0FF"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE8C8;" />
                         <TextBlock VerticalAlignment="Center" Text="复制 Key" />
                     </StackPanel>
                 </Button>
                 <Separator />
                 <ToggleButton IsChecked="{Binding ShowOtherLanguagesPanel}" ToolTip="显示/隐藏其他语言面板 (F3)">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE774;" Foreground="#60CDFF" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#60CDFF"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE774;" />
                         <TextBlock VerticalAlignment="Center" Text="其他语言" />
                     </StackPanel>
                 </ToggleButton>
                 <Separator />
                 <!--  主题切换下拉菜单  -->
-                <Menu Background="Transparent" VerticalAlignment="Center">
+                <Menu VerticalAlignment="Center" Background="Transparent">
                     <MenuItem ToolTip="切换主题模式">
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE771;" Foreground="#FFB900" />
+                                <TextBlock
+                                    Margin="0,0,5,0"
+                                    Foreground="#FFB900"
+                                    Style="{StaticResource FluentIcon}"
+                                    Text="&#xE771;" />
                                 <TextBlock VerticalAlignment="Center" Text="主题" />
                             </StackPanel>
                         </MenuItem.Header>
                         <MenuItem Command="{Binding SetThemeLightCommand}">
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE706;" Foreground="#FFB900" Margin="0,0,5,0" />
-                                    <TextBlock Text="亮色" VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Margin="0,0,5,0"
+                                        Foreground="#FFB900"
+                                        Style="{StaticResource FluentIcon}"
+                                        Text="&#xE706;" />
+                                    <TextBlock VerticalAlignment="Center" Text="亮色" />
                                 </StackPanel>
                             </MenuItem.Header>
                         </MenuItem>
                         <MenuItem Command="{Binding SetThemeDarkCommand}">
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE708;" Foreground="#6B6B6B" Margin="0,0,5,0" />
-                                    <TextBlock Text="暗色" VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Margin="0,0,5,0"
+                                        Foreground="#6B6B6B"
+                                        Style="{StaticResource FluentIcon}"
+                                        Text="&#xE708;" />
+                                    <TextBlock VerticalAlignment="Center" Text="暗色" />
                                 </StackPanel>
                             </MenuItem.Header>
                         </MenuItem>
                         <MenuItem Command="{Binding SetThemeSystemCommand}">
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE770;" Foreground="#60CDFF" Margin="0,0,5,0" />
-                                    <TextBlock Text="跟随系统" VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Margin="0,0,5,0"
+                                        Foreground="#60CDFF"
+                                        Style="{StaticResource FluentIcon}"
+                                        Text="&#xE770;" />
+                                    <TextBlock VerticalAlignment="Center" Text="跟随系统" />
                                 </StackPanel>
                             </MenuItem.Header>
                         </MenuItem>
@@ -134,15 +174,26 @@
                 <Separator />
                 <Button Command="{Binding OpenSettingsCommand}" ToolTip="设置">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0,0,5,0" Style="{StaticResource FluentIcon}" Text="&#xE713;" Foreground="#9E9E9E" />
+                        <TextBlock
+                            Margin="0,0,5,0"
+                            Foreground="#9E9E9E"
+                            Style="{StaticResource FluentIcon}"
+                            Text="&#xE713;" />
                         <TextBlock VerticalAlignment="Center" Text="设置" />
                     </StackPanel>
                 </Button>
             </ToolBar>
             <ToolBar Band="0" BandIndex="1">
-                <StackPanel Orientation="Horizontal" Margin="5,0">
-                    <TextBlock Style="{StaticResource FluentIcon}" Text="&#xE721;" Foreground="#60CDFF" Margin="0,0,5,0" />
-                    <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="搜索:" />
+                <StackPanel Margin="5,0" Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,0,5,0"
+                        Foreground="#60CDFF"
+                        Style="{StaticResource FluentIcon}"
+                        Text="&#xE721;" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="搜索:" />
                 </StackPanel>
                 <TextBox
                     x:Name="SearchBox"
@@ -169,9 +220,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Border
-                    Grid.Row="0"
-                    Padding="10,5">
+                <Border Grid.Row="0" Padding="10,5">
                     <TextBlock FontWeight="Bold" Text="资源节点" />
                 </Border>
 
@@ -181,7 +230,7 @@
                     ItemsSource="{Binding TreeNodes}"
                     SelectedItemChanged="TreeView_SelectedItemChanged">
                     <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                        <Style BasedOn="{StaticResource {x:Type TreeViewItem}}" TargetType="TreeViewItem">
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                             <Setter Property="Padding" Value="3" />
@@ -190,7 +239,13 @@
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding GroupChildren}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe Fluent Icons" FontSize="14" Text="&#xE8B7;" Foreground="#D4A017" Margin="0,0,5,0" VerticalAlignment="Center" />
+                                <TextBlock
+                                    Margin="0,0,5,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="Segoe Fluent Icons"
+                                    FontSize="14"
+                                    Foreground="#D4A017"
+                                    Text="&#xE8B7;" />
                                 <TextBlock VerticalAlignment="Center" Text="{Binding Key}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
@@ -227,7 +282,7 @@
                                 <DataTemplate>
                                     <StackPanel Margin="5" Orientation="Horizontal">
                                         <TextBlock FontWeight="SemiBold" Text="{Binding FullPath}" />
-                                        <TextBlock Text=" = " Opacity="0.6" />
+                                        <TextBlock Opacity="0.6" Text=" = " />
                                         <TextBlock
                                             MaxWidth="200"
                                             Foreground="#60CDFF"
@@ -262,13 +317,14 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Border
-                        Grid.Row="0"
-                        Padding="5,5">
+                    <Border Grid.Row="0" Padding="5,5">
                         <StackPanel Orientation="Horizontal">
                             <!-- <TextBlock FontWeight="Bold" Text="字符串资源" />
-                            <TextBlock Opacity="0.6" Text=" - " /> -->
-                            <TextBlock Opacity="0.6" FontWeight="Bold" Text="{Binding SelectedTreeNode.FullPath}" />
+                            <TextBlock Opacity="0.6" Text=" - " />-->
+                            <TextBlock
+                                FontWeight="Bold"
+                                Opacity="0.6"
+                                Text="{Binding SelectedTreeNode.FullPath}" />
                             <TextBlock Opacity="0.6" Text="." />
                         </StackPanel>
                     </Border>
@@ -339,17 +395,13 @@
                     Visibility="{Binding ShowOtherLanguagesPanel, Converter={StaticResource BoolToVis}}" />
 
                 <!--  下部：其他语言值  -->
-                <Grid
-                    Grid.Row="2"
-                    Visibility="{Binding ShowOtherLanguagesPanel, Converter={StaticResource BoolToVis}}">
+                <Grid Grid.Row="2" Visibility="{Binding ShowOtherLanguagesPanel, Converter={StaticResource BoolToVis}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Border
-                        Grid.Row="0"
-                        Padding="10,5">
+                    <Border Grid.Row="0" Padding="10,5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontWeight="Bold" Text="其他语言" />
                             <TextBlock Opacity="0.6" Text=" - " />
