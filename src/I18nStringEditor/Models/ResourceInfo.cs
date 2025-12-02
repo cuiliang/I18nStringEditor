@@ -18,6 +18,16 @@ public class ResourceInfo
     public Dictionary<string, string> Comments { get; set; } = new();
 
     /// <summary>
+    /// 当前选中的树节点路径
+    /// </summary>
+    public string? SelectedTreeNodePath { get; set; }
+
+    /// <summary>
+    /// 当前选中的字符串项路径
+    /// </summary>
+    public string? SelectedStringItemPath { get; set; }
+
+    /// <summary>
     /// 全局设置
     /// </summary>
     public GlobalSettings Settings { get; set; } = new();

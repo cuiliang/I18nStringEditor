@@ -259,6 +259,9 @@ public partial class MainViewModel : ObservableObject
                     StringKeyTemplate = _resourceService.CurrentInfo.Settings.StringKeyTemplate;
                 }
 
+                // 恢复选中状态
+                RestoreSelectedStates();
+
                 StatusMessage = "文件加载成功";
             }
         }
@@ -273,6 +276,43 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// 恢复选中状态
+    /// </summary>
+    private void RestoreSelectedStates()
+    {
+        var (treeNodePath, stringItemPath) = _resourceService.GetSelectedPaths();
+
+        // 恢复树节点选中状态
+        if (!string.IsNullOrEmpty(treeNodePath))
+        {
+            var treeNode = _resourceService.FindNodeByPath(treeNodePath);
+            if (treeNode != null)
+            {
+                // 展开所有祖先节点
+                var ancestorNode = treeNode.Parent;
+                while (ancestorNode != null && ancestorNode != _resourceService.RootNode)
+                {
+                    ancestorNode.IsExpanded = true;
+                    ancestorNode = ancestorNode.Parent;
+                }
+
+                treeNode.IsSelected = true;
+                SelectedTreeNode = treeNode;
+            }
+        }
+
+        // 恢复字符串项选中状态
+        if (!string.IsNullOrEmpty(stringItemPath))
+        {
+            var stringItem = _resourceService.FindNodeByPath(stringItemPath);
+            if (stringItem != null)
+            {
+                SelectedStringItem = stringItem;
+            }
+        }
+    }
+
     [RelayCommand]
     private async Task SaveFileAsync()
     {
@@ -283,6 +323,11 @@ public partial class MainViewModel : ObservableObject
             {
                 _resourceService.CurrentInfo.Settings.StringKeyTemplate = StringKeyTemplate;
             }
+
+            // 保存选中状态
+            _resourceService.SetSelectedPaths(
+                SelectedTreeNode?.FullPath,
+                SelectedStringItem?.FullPath);
 
             await _resourceService.SaveAsync();
             StatusMessage = $"已保存 - {DateTime.Now:HH:mm:ss}";
@@ -520,8 +565,13 @@ public partial class MainViewModel : ObservableObject
         _autoSaveTimer?.Start();
     }
 
-    public void SaveSettings()
+    public async Task SaveSettingsAsync()
     {
+        // 保存资源文件（包含选中状态）
+        if (_resourceService.CurrentFilePath != null)
+        {
+            await SaveFileAsync();
+        }
         _settingsService.Save();
     }
 }
@@ -694,8 +744,20 @@ public class AddStringDialog : Window
             System.Windows.Input.ModifierKeys.Alt);
         InputBindings.Add(saveBinding);
 
-        // 窗口加载后将焦点设置到第一个输入框
-        Loaded += (s, e) => _keyTextBox.Focus();
+        // 窗口加载后将焦点设置到第一个输入框，并检查剪贴板内容
+        Loaded += (s, e) =>
+        {
+            // 如果剪贴板中有文本，自动填写到"值"字段
+            if (Clipboard.ContainsText())
+            {
+                var clipboardText = Clipboard.GetText();
+                if (!string.IsNullOrEmpty(clipboardText))
+                {
+                    _valueTextBox.Text = clipboardText;
+                }
+            }
+            _keyTextBox.Focus();
+        };
     }
 }
 

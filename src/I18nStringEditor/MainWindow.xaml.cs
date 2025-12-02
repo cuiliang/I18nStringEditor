@@ -41,9 +41,9 @@ public partial class MainWindow : Window
         await _viewModel.InitializeAsync();
     }
 
-    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
-        _viewModel.SaveSettings();
+        await _viewModel.SaveSettingsAsync();
     }
 
     private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

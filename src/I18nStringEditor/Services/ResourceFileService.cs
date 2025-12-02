@@ -258,6 +258,51 @@ public class ResourceFileService
         }
     }
 
+    /// <summary>
+    /// 设置选中节点的路径（用于保存）
+    /// </summary>
+    public void SetSelectedPaths(string? treeNodePath, string? stringItemPath)
+    {
+        if (CurrentInfo != null)
+        {
+            CurrentInfo.SelectedTreeNodePath = treeNodePath;
+            CurrentInfo.SelectedStringItemPath = stringItemPath;
+        }
+    }
+
+    /// <summary>
+    /// 获取选中节点的路径（用于恢复）
+    /// </summary>
+    public (string? TreeNodePath, string? StringItemPath) GetSelectedPaths()
+    {
+        return (CurrentInfo?.SelectedTreeNodePath, CurrentInfo?.SelectedStringItemPath);
+    }
+
+    /// <summary>
+    /// 根据路径查找节点
+    /// </summary>
+    public ResourceNode? FindNodeByPath(string? path)
+    {
+        if (string.IsNullOrEmpty(path) || RootNode == null)
+            return null;
+
+        return FindNodeByPathRecursive(RootNode, path);
+    }
+
+    private ResourceNode? FindNodeByPathRecursive(ResourceNode node, string path)
+    {
+        foreach (var child in node.Children)
+        {
+            if (child.FullPath == path)
+                return child;
+
+            var found = FindNodeByPathRecursive(child, path);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
     private void ApplyInfoToNodes(ResourceNode node)
     {
         if (CurrentInfo == null)
