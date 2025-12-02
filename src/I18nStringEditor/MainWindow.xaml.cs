@@ -38,6 +38,9 @@ public partial class MainWindow : Window
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        // 初始化全局快捷键
+        App.InitializeGlobalHotkey(this);
+        
         await _viewModel.InitializeAsync();
     }
 

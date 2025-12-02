@@ -55,4 +55,14 @@ public class AppSettings
     /// 主题模式
     /// </summary>
     public ThemeMode ThemeMode { get; set; } = ThemeMode.System;
+
+    /// <summary>
+    /// 是否启用全局快捷键
+    /// </summary>
+    public bool EnableGlobalHotkey { get; set; } = true;
+
+    /// <summary>
+    /// 唤起窗口的全局快捷键 (格式如: "Ctrl + Alt + I")
+    /// </summary>
+    public string GlobalHotkey { get; set; } = "Ctrl + Alt + I";
 }
