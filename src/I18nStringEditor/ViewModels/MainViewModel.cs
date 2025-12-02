@@ -122,12 +122,12 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     private void UpdateWindowTitle()
     {
-        var themeText = App.GetThemeModeDisplayName(CurrentThemeMode);
-        var themeIndicator = App.IsDarkTheme ? "🌙" : "☀️";
+        // var themeText = App.GetThemeModeDisplayName(CurrentThemeMode);
+        // var themeIndicator = App.IsDarkTheme ? "🌙" : "☀️";
         
         if (!string.IsNullOrEmpty(_settingsService.Settings.LastOpenedFilePath))
         {
-            WindowTitle = $"{_settingsService.Settings.LastOpenedFilePath}";
+            WindowTitle = $"{Path.GetFileName(_settingsService.Settings.LastOpenedFilePath)} - {_settingsService.Settings.LastOpenedFilePath}";
         }
         else
         {
