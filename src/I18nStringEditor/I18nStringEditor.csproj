@@ -9,11 +9,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- 取消 WPF0001 诊断，因为使用了 ThemeMode 预览功能 -->
     <NoWarn>$(NoWarn);WPF0001</NoWarn>
-    <ApplicationIcon>Assets\string.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\i18n_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Assets\string.ico" />
+    <Content Include="Assets\i18n_icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
